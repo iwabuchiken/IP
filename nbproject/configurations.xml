@@ -2,10 +2,13 @@
 <configurationDescriptor version="94">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles" displayName="ソース・ファイル" projectFiles="true">
+      <itemPath>img_lib.c</itemPath>
+      <itemPath>lib.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles" displayName="ヘッダー・ファイル" projectFiles="true">
-      <itemPath>lib.h</itemPath>
+      <itemPath>include/img_lib.h</itemPath>
+      <itemPath>include/lib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles" displayName="リソース・ファイル" projectFiles="true">
     </logicalFolder>
@@ -32,7 +35,13 @@
       </toolsSet>
       <compileType>
       </compileType>
-      <item path="lib.h" ex="false" tool="3" flavor2="0">
+      <item path="img_lib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="include/img_lib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/lib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -57,7 +66,13 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="lib.h" ex="false" tool="3" flavor2="0">
+      <item path="img_lib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="include/img_lib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/lib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="lib.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
