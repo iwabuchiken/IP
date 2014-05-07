@@ -670,3 +670,34 @@ int _opt_ForceCreate_RootDst(char **argv)
     return flag;
     
 }
+
+_opt_OverWrite_DstFile(char **argv)
+{
+    char *opt_OverWrite_DstFile = "-ff";
+
+    int increment = 1;
+
+    int flag = 0;
+
+    // Inspect args
+    while(*(argv + increment) != NULL) {
+	
+	int res = strcmp(*(argv + increment), opt_OverWrite_DstFile);
+//		int res = strcmp(*argv, opt_RGB);
+
+	if (res == 0) {
+	    
+	    flag = 1;
+	    
+	    break;
+
+	}//if (res == 0)
+
+//		argv++;
+	increment ++;
+
+    }//while(*argv != NULL)
+    
+    return flag;
+    
+}

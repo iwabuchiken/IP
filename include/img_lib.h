@@ -20,5 +20,7 @@ char * _opt_Src_File(char **, char *);
 char * _opt_Dst_File(char **, char *, char *);
 int _opt_ForceCreate_RootDst(char **);
 
+int _opt_OverWrite_DstFile(char **);
+	
 #endif	/* IMG_LIB_H */
 

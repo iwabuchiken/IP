@@ -37,7 +37,7 @@ void set_Root(void);
 
 void _main_RGB(char **);
 void _main_SrcFile(char **);
-void _main_DstFile(char **);
+void _main_DstDir(char **);
 
 void _test_FileSep(void);
 void _test_BaseName(void);
@@ -46,6 +46,7 @@ void _test_IntTypePointer(void);
 void _test_Realpath(void);
 void _test_MkDir(void);
 
+void _main_DstFile(char **);
 
 
 //////////////////////////////////////////
@@ -149,8 +150,15 @@ int main(int argc, char** argv) {
     /*******************************
          Get: IMAGE_ROOT_DST
      *******************************/
-    _main_DstFile(argv);
+    _main_DstDir(argv);
     
+    /*******************************
+     Validate: IMAGE_FILE_DST
+     *******************************/
+    _main_DstFile(argv);
+	    
+    
+	    
     /*******************************
      Tests
     *******************************/
@@ -504,7 +512,7 @@ void _main_SrcFile(char **argv)
         
 }//void _main_SrcFile(char **, char *)
 
-void _main_DstFile(char **argv)
+void _main_DstDir(char **argv)
 {
     int res_i;
     
@@ -525,12 +533,12 @@ void _main_DstFile(char **argv)
     }
 
     
-    consolColor_Change(black, white);
+//    consolColor_Change(black, white);
     
     //log
     printf("[%s:%d] IMAGE_FILE_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
 
-    consolColor_Reset();
+//    consolColor_Reset();
     
     /*******************************
 	Validate: IMAGE_ROOT_DST => exists?
@@ -659,4 +667,75 @@ void _main_DstFile(char **argv)
 	Validate: dst pgm file => exists?
      *******************************/
         
-}//_main_DstFile(char **argv)
+}//_main_DstDir(char **argv)
+
+void _main_DstFile(char **argv)
+{
+    int res_i;
+    
+    /*******************************
+     Validate: IMAGE_FILE_DST is NULL?
+     *******************************/
+    if (IMAGE_FILE_DST == NULL) {
+
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_FILE_DST => NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] Sorry. The program quits\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+	
+    }
+    
+    /*******************************
+     File => exists?
+     *******************************/
+    res_i = fileExists(IMAGE_FILE_DST);
+    
+    if (res_i == 1) {	// the file exists
+	
+	res_i = _opt_OverWrite_DstFile(argv);
+	
+	if (res_i == 1) {   // "-ff" option given
+
+	    //log
+	    printf("[%s:%d] Dst file exists. '-ff' option given. "
+		    "The file will be overwritten\n",
+		    base_name(__FILE__), __LINE__);
+
+	} else {//  if (res_i == 1) {   // "-ff" option not given
+	    
+	    consolColor_Change(black, red);
+
+	    //log
+	    printf("[%s:%d] Dst file exists. '-ff' option not given."
+		    " Can't use the dst file. The program quits.\n",
+		    base_name(__FILE__), __LINE__);
+
+	    consolColor_Reset();
+	    
+	    exit(-1);
+	    
+	}//if (res_i == 1) {   // "-ff" option
+
+	
+    } else {//if (res_i == 1) {	// the file exists
+	
+	//log
+	printf("[%s:%d] Dst file => doesn't exist. Wil be created: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
+	
+    }//if (res_i == 1) {	// the file exists
+
+    consolColor_Change(black, white);
+
+    //log
+    printf("[%s:%d] IMAGE_FILE_DST => set: %s\n",
+	    base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
+
+    consolColor_Reset();
+    
+}//void _main_DstFile(char **argv)
