@@ -33,43 +33,17 @@ char *get_FileSep_Str()
 
 char* base_name(char* fullpath)
 {
-//	printf("[%s:%d] fullpath => %s\n", __FILE__, __LINE__, fullpath);
+    char sep = get_FileSep();
 
+    char *base = strrchr(fullpath, sep);
 
-//	char sep = '/';
-//	char sep = 'i';
-	char sep = get_FileSep();
+    if (base == NULL) {
 
-//	printf("[%s:%d] sep => %c\n", __FILE__, __LINE__, sep);
+	    return fullpath;
 
+    }
 
-//	char *base = strrchr(*fullpath, sep);
-	char *base = strrchr(fullpath, sep);
-
-	if (base == NULL) {
-
-		return fullpath;
-
-	}
-
-//	printf("[%s:%d] base => obtained(=%s\n", __FILE__, __LINE__, base);
-
-
-//	char *ret = (char*) malloc (sizeof(char) * (strlen(base) + 1));
-////	char *ret = (char *) malloc (sizeof(char) * (strlen(base) + 1));
-//
-//	printf("[%s:%d] malloc => done(ret=%s)\n", __FILE__, __LINE__, ret);
-//
-//
-//	strcpy(ret, base);
-//
-//	ret[strlen(base)] = '\0';
-//
-//	printf("[%s:%d] ret => %s\n", __FILE__, __LINE__, ret);
-//
-//
-//	return ret;
-	return base;
+    return base;
 
 }
 
@@ -152,6 +126,10 @@ char** str_split_3
     delim[0] = a_delim;
     delim[1] = 0;
 
+    //log
+    printf("[%s:%d] delim => %s\n", base_name(__FILE__), __LINE__, delim);
+
+    
     char *a_str_new;
 
     char** result    = 0;
@@ -166,7 +144,16 @@ char** str_split_3
     /************************************
      * operations
     ************************************/
-    a_str_new = malloc(sizeof(char) * (strlen(a_str) + 1));
+    //log
+    printf("[%s:%d] a_str = %s\n", base_name(__FILE__), __LINE__, a_str);
+
+    
+    a_str_new = (char *) malloc(sizeof(char) * (strlen(a_str) + 1));
+//    a_str_new = malloc(sizeof(char) * (strlen(a_str) + 1));
+    
+    //log
+    printf("[%s:%d] malloc => done for a_str_new (a_str=%s)\n",
+	    base_name(__FILE__), __LINE__, a_str);
 
     if (a_str_new == NULL) {
 
@@ -352,7 +339,13 @@ char* dir_name(char* fullpath)
 	
 	//log
         printf("[%s:%d] base => %s\n", base_name(__FILE__), __LINE__, base);
+	
+	if (strlen(base) > 1) {
+	    
+	    printf("[%s:%d] (base + 1) => %s\n",
+		    base_name(__FILE__), __LINE__, (base + 1));
 
+	}
 	
 	int diff;
 
@@ -382,7 +375,7 @@ char* dir_name(char* fullpath)
 	dirname[diff] = '\0';
 //	dirname[diff - 1] = '\0';
 
-//	printf("dirname=%s\n", dirname);
+	printf("dirname=%s\n", dirname);
 
 //	char dname[strlen(dirname)];
 //
@@ -395,4 +388,77 @@ char* dir_name(char* fullpath)
 //	return "ok";
 
 }
+
+/*******************************
+  int dirExists(char *dpath)
+ * @return 1 => dir exists
+ *	    -1 => Unknown dir path
+ *	    ENOENT => dir doesn't exist
+ *******************************/
+int dirExists(char *dpath)
+//int dirExists(char *dpath)
+{
+	/************************************
+	 * vars
+	************************************/
+	DIR* dir = opendir(dpath);
+
+	int res;
+
+	/************************************
+	 * operations
+	************************************/
+	if (dir)
+	{
+	    /* Directory exists. */
+	    closedir(dir);
+
+	    res = 1;
+
+	}
+	else if (ENOENT == errno)
+	{
+	    /* Directory does not exist. */
+	    res = ENOENT;
+
+	}
+	else
+	{
+
+	    /* opendir() failed for some other reason. */
+	    res = -1;
+		
+	}
+
+	return res;
+
+}//enum RetVals dirExists(char *dpath)
+
+/*******************************
+ @return 1 => exists
+ *	0   => doesn't 
+ *******************************/
+int fileExists(char *fpath)
+{
+
+    FILE *fp;
+
+    if ( (fp = fopen( fpath, "r" ))==NULL ) {
+	    //log
+	    printf("[%s:%d] The file doesn't exist: %s\n",
+//				basename_2(__FILE__), __LINE__, fpath_stripped);
+			    base_name(__FILE__), __LINE__, fpath);
+
+	    return 0;
+
+    } else {
+
+	    fclose(fp);
+
+	    return 1;
+
+    }
+
+}//enum RetVals fileExists(char *fpath)
+
 

@@ -38,6 +38,21 @@ extern "C" {
 #include <unistd.h>
 #endif
 
+#ifndef DIRENT_H
+#define DIRENT_H
+#include <dirent.h>
+#endif
+
+//REF http://www.gnu.org/software/libc/manual/html_node/Error-Codes.html
+#ifndef ERRNO_H
+#define ERRNO_H
+#include <errno.h>
+#endif
+
+#ifndef STDIO_H
+#define STDIO_H
+#include <stdio.h>
+#endif
     
     
 ///////////////////////////////////////////////////////
@@ -132,6 +147,10 @@ char** str_split_3(char*, const char, int*);
 char* concat3(char *s1, char *s2, char *s3);
 
 char* dir_name(char*);
+
+int dirExists(char *);
+
+int fileExists(char *);
 
 #ifdef	__cplusplus
 }

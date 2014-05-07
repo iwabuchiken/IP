@@ -17,6 +17,7 @@ void show_usage(void);
 int _opt_RGV(char **, int **);
 int validate_RGBStringFormat(char *);
 char * _opt_Src_File(char **, char *);
+char * _opt_Dst_File(char **, char *, char *);
 
 #endif	/* IMG_LIB_H */
 

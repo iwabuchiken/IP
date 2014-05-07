@@ -49,6 +49,13 @@ void _test_MkDir(void);
 //////////////////////////////////////////
 char *ROOT;
 
+char *IMAGE_ROOT_SRC;
+char *IMAGE_FILE_SRC;
+
+char *IMAGE_ROOT_DST;
+char *IMAGE_FILE_DST;
+
+
 int main(int argc, char** argv) {
 
     ///////////////////////////////////////////////////////
@@ -61,7 +68,7 @@ int main(int argc, char** argv) {
     set_Root();
 
 //    _test_Realpath();
-    _test_MkDir();
+//    _test_MkDir();
     
     //log
     printf("[%s:%d] argv[0] = %s\n", base_name(__FILE__), __LINE__, argv[0]);
@@ -182,15 +189,6 @@ int main(int argc, char** argv) {
     //log
     printf("[%s:%d] Calling => _opt_Src_File()\n", base_name(__FILE__), __LINE__);
 
-    //log
-//    printf("[%s:%d] __FILE__ => %s\n", base_name(__FILE__), __LINE__, __FILE__);
-//
-//    printf("[%s:%d] PATH_MAX = %d\n", base_name(__FILE__), __LINE__, PATH_MAX);
-//
-//    //log
-//    printf("[%s:%d] dir_name => %s\n", base_name(__FILE__), __LINE__, dir_name(__FILE__));
-////	printf("[%s:%d] dir_name => %s\n", base_name(__FILE__), __LINE__, dirname(__FILE__));
-
     fpath_src = _opt_Src_File(argv, ROOT);
 //    fpath_src = _opt_Src_File(argv, dir_name(__FILE__));
 
@@ -199,7 +197,122 @@ int main(int argc, char** argv) {
     printf("\n[%s:%d] fpath_src => %s\n\n", base_name(__FILE__), __LINE__, fpath_src);
 
     consolColor_Reset();
+    
+    /*******************************
+     Validate: source file, path
+     *******************************/
+    /*******************************
+	Set: IMAGE_ROOT_SRC
+     *******************************/
+    char *tmp = dir_name(fpath_src);
+    
+    if (tmp != NULL) {
+	
+	//log
+	printf("[%s:%d] tmp => != NULL (=%s)\n", base_name(__FILE__), __LINE__, tmp);
 
+	
+	int len = strlen(tmp);
+	
+	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
+	
+	strcpy(IMAGE_ROOT_SRC, tmp);
+	
+	*(IMAGE_ROOT_SRC + len) = '\0';
+	
+	consolColor_Change(black, white);
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	
+	consolColor_Reset();
+	
+    } else {
+	
+	//log
+	printf("[%s:%d] tmp =>  NULL\n", base_name(__FILE__), __LINE__);
+	
+	int len = strlen(ROOT);
+	
+	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
+	
+	strcpy(IMAGE_ROOT_SRC, tmp);
+	
+	*(IMAGE_ROOT_SRC + len) = '\0';
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+
+    }
+    
+    consolColor_Reset();
+
+    /*******************************
+	Validate: IMAGE_ROOT_SRC => exists?
+     *******************************/
+    res_i = dirExists(IMAGE_ROOT_SRC);
+    
+    //log
+    printf("[%s:%d] dirExists => %d\n", base_name(__FILE__), __LINE__, res_i);
+    
+    // If IMAGE_ROOT_SRC doesn't exist
+    //	=> show message, and exit the program
+    if (res_i != 1) {
+	
+	consolColor_Change(black, red);
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	
+	//log
+	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
+	
+	consolColor_Reset();
+	
+	exit(-1);
+
+    }
+
+    /*******************************
+	Validate: source pgm file => exists?
+     *******************************/
+    res_i = fileExists(fpath_src);
+    
+    //log
+    printf("[%s:%d] fileExists => %d\n", base_name(__FILE__), __LINE__, res_i);
+
+    // If source pgm file doesn't exist
+    //	=> show message, and exit the program
+    if (res_i != 1) {
+	
+	consolColor_Change(black, red);
+	
+	//log
+	printf("[%s:%d] source pgm file => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, fpath_src);
+	
+	//log
+	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
+	
+	consolColor_Reset();
+	
+	exit(-1);
+
+    }
+    
+    /*******************************
+         Get: IMAGE_ROOT_DST
+     *******************************/
+    /*******************************
+	Validate: IMAGE_ROOT_DST => exists?
+     *******************************/
+    /*******************************
+	Validate: dst pgm file => exists?
+     *******************************/
+    
     /*******************************
      Tests
     *******************************/
