@@ -12,6 +12,53 @@
 #include "lib.h"
 #endif
 
+/*******************************
+ * typedef
+ *******************************/
+typedef unsigned int gray;
+
+typedef gray pixval;
+
+/*******************************
+ * struct
+ *******************************/    
+typedef struct {
+
+	gray x;
+	gray y;
+
+	gray max_gray;
+
+	gray *grays;
+
+	char format[3];
+
+	char *file_name;
+
+} PGM;
+
+typedef struct {
+    pixval r, g, b;
+} pixel;
+
+typedef struct {
+
+    gray x;
+    gray y;
+
+    gray max_brightness;
+
+    char format[3];
+
+    char *file_name;
+
+    pixel *pixels;	//
+
+} PPM;
+
+/*******************************
+ * Prototypes
+ *******************************/
 void show_usage(void);
 
 int _opt_RGV(char **, int **);

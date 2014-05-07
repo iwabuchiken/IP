@@ -180,3 +180,85 @@ int get_PGM(FILE* fp, PGM *pgm)
 
 }//enum RetVals get_PGMHeader(FILE* fp)
 
+/*******************************
+ int conv_PGM2PPM(PGM *pgm, PPM *ppm)
+ * @return 1 => conversion done 
+ *******************************/
+int conv_PGM2PPM(PGM *pgm, PPM *ppm)
+{
+    /************************************
+     * Build ppm: header
+    ************************************/
+//	fputs( "P6\n", fp );
+
+    // file name
+//	fprintf( fp, "# %s\n", pgm->file_name );
+//	ppm->file_name = base_name(file_path_dst);
+//	ppm->file_name = pgm->file_name;
+
+    // format
+    strcpy(ppm->format, "P6");
+    
+    ppm->format[2] = '\0';
+    
+//    ppm->format
+
+
+    // size
+//	fprintf( fp, "%d %d\n", pgm->x, pgm->y );
+    ppm->x = pgm->x;
+    ppm->y = pgm->y;
+
+    // max brightness
+//	fprintf( fp, "%d\n", pgm->max_gray );
+    ppm->max_brightness = pgm->max_gray;
+
+//	tmp_msg = "[%s:%d] ppm header => created\n";
+
+    printf("[%s:%d] ppm header => created\n",
+		    base_name(__FILE__), __LINE__);
+
+//	tmp_msg = "[%s:%d] ppm->file_name => %s\n";
+
+//	printf("[%s:%d] ppm->file_name => %s\n",
+//			base_name(__FILE__), __LINE__, ppm->file_name);
+
+    /************************************
+     * Build ppm: body
+    ************************************/
+    int position = 0;
+
+    int i, j;
+
+    int num_of_pixels = ppm->x * ppm->y;
+
+    ppm->pixels = (pixel *) malloc (sizeof(pixel) * num_of_pixels);
+
+//	tmp_msg = "[%s:%d] ppm->x = %d, ppm->y = %d\n";
+//
+//	printf(tmp_msg, base_name(__FILE__), __LINE__, ppm->x, ppm->y);
+
+
+    for (i = 0; i < ppm->y; ++i) {
+
+	for (j = 0; j < ppm->x; ++j) {
+
+	    ppm->pixels[position].r = pgm->grays[position];
+	    ppm->pixels[position].g = pgm->grays[position];
+	    ppm->pixels[position].b = pgm->grays[position];
+//			ppm->pixels[position].r = 0;
+//			ppm->pixels[position].g = 0;
+
+	    position ++;
+
+	}
+    }
+
+//	tmp_msg = "[%s:%d] Build ppm body => done\n";
+
+    printf("[%s:%d] Build ppm body => done\n",
+		    base_name(__FILE__), __LINE__);
+
+    return 1;
+    
+}//enum RetVals conv_PGM2PPM

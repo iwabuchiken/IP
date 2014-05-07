@@ -11,27 +11,36 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
+
+/*******************************
+ * includes
+ *******************************/
+#ifndef IMG_LIB_H
+#include "img_lib.h"
+#endif
     
-    /*******************************
-     * typedef
-     *******************************/
-    typedef unsigned int gray;
-
-    /*******************************
-     * struct
-     *******************************/    
-    typedef struct {
-
-	    gray x;
-	    gray y;
-
-	    gray max_gray;
-
-	    gray *grays;
-
-	    char *file_name;
-    
-    } PGM;
+//    /*******************************
+//     * typedef
+//     *******************************/
+//    typedef unsigned int gray;
+//
+//    /*******************************
+//     * struct
+//     *******************************/    
+//    typedef struct {
+//
+//	    gray x;
+//	    gray y;
+//
+//	    gray max_gray;
+//
+//	    gray *grays;
+//
+//	    char format[3];
+//	    
+//	    char *file_name;
+//    
+//    } PGM;
 
     /*******************************
      * vars
@@ -47,7 +56,10 @@ extern "C" {
      * prototypes
      *******************************/
     int get_PGM_2(char *, PGM *);
-
+    int get_PGM(FILE *, PGM *);
+    
+    int conv_PGM2PPM(PGM *, PPM *);
+    
 #ifdef	__cplusplus
 }
 #endif

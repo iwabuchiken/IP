@@ -54,6 +54,8 @@ void _test_MkDir(void);
 void _main_DstFile(char **);
 void _main_GetPGM(void);
 
+void _main_Conv_PGM2PPM(void);
+
 //////////////////////////////////////////
 
 // Gloval variables
@@ -178,6 +180,18 @@ int main(int argc, char** argv) {
 //    //log
 //    printf("[%s:%d] get_PGM_2 => %d\n", base_name(__FILE__), __LINE__, res_i);
 
+    /*******************************
+     * Convert: PGM to PPM
+     *******************************/
+    _main_Conv_PGM2PPM();
+//    PPM_dst = (PPM *) malloc(sizeof(PPM) * 1);
+//    
+//    conv_PGM2PPM(PGM_src, PPM_dst);
+//    
+//    //log
+//    printf("[%s:%d] PPM_dst->max_brightness => %d\n",
+//	    base_name(__FILE__), __LINE__, PPM_dst->max_brightness);
+
     
     
 	    
@@ -186,22 +200,6 @@ int main(int argc, char** argv) {
     *******************************/
 //	_test_IntTypePointer();
 	
-	
-//    //log
-//    printf("[%s:%d] textcolor=%d backcolor=%d\n",
-//	    base_name(__FILE__), __LINE__, console_textColor, console_backgroundColor);
-    
-//    console_textColor = 10;
-//    
-////    enum concol b;
-//    concol a = green;
-//    
-//    printf("concol a => %d\n", a);
-    
-//    _test_FileSep();
-//    _test_BaseName();
-//    _test_ConsoleColor();
-    
     printf("done\n");
     
     on_Destroy();
@@ -834,7 +832,39 @@ void on_Destroy(void)
     free(RGB);
 //int * RGB[3];
 
-    free(PGM_src);
-    free(PPM_dst);
+    if (!PGM_src) {
+
+	free(PGM_src);
+	
+    }
+    
+    //log
+    if (!PPM_dst) {
+//    if (PPM_dst == NULL) {
+
+	free(PPM_dst);
+//	//log
+//	printf("[%s:%d] PPM_dst => NULL\n", base_name(__FILE__), __LINE__);
+
+    }
+
+//    printf("[%s:%d] PPM_dst => %s\n", base_name(__FILE__), __LINE__, PPM_dst);
+
+//    free(PPM_dst);
+    
+}
+
+void _main_Conv_PGM2PPM(void)
+{
+    PPM_dst = (PPM *) malloc(sizeof(PPM) * 1);
+    
+    conv_PGM2PPM(PGM_src, PPM_dst);
+    
+    consolColor_Change(black, white);
+	
+    printf("[%s:%d] PPM_dst->max_brightness => %d\n",
+	    base_name(__FILE__), __LINE__, PPM_dst->max_brightness);
+    
+    consolColor_Reset();    //log
     
 }

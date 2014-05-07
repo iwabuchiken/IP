@@ -8,6 +8,13 @@
 #ifndef PPMLIB_H
 #define	PPMLIB_H
 
+/*******************************
+ * includes
+ *******************************/
+#ifndef IMG_LIB_H
+#include "img_lib.h"
+#endif
+
 #ifndef PGMLIB_H
 #include "pgmlib.h"
 #endif
@@ -19,27 +26,29 @@ extern "C" {
     /*******************************
      * typedef
      *******************************/
-    typedef gray pixval;
+//    typedef gray pixval;
 
     /*******************************
      * struct
      *******************************/
-    typedef struct {
-	pixval r, g, b;
-    } pixel;
-
-    typedef struct {
-
-	gray x;
-	gray y;
-
-	gray max_brightness;
-
-	char *file_name;
-
-	pixel *pixels;	//
-
-    } PPM;
+//    typedef struct {
+//	pixval r, g, b;
+//    } pixel;
+//
+//    typedef struct {
+//
+//	gray x;
+//	gray y;
+//
+//	gray max_brightness;
+//	
+//	char format[3];
+//	
+//	char *file_name;
+//
+//	pixel *pixels;	//
+//
+//    } PPM;
 
 
 #ifdef	__cplusplus
