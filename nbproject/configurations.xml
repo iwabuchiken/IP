@@ -5,10 +5,13 @@
       <itemPath>img_lib.c</itemPath>
       <itemPath>lib.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>pgmlib.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles" displayName="ヘッダー・ファイル" projectFiles="true">
       <itemPath>include/img_lib.h</itemPath>
       <itemPath>include/lib.h</itemPath>
+      <itemPath>include/pgmlib.h</itemPath>
+      <itemPath>include/ppmlib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles" displayName="リソース・ファイル" projectFiles="true">
     </logicalFolder>
@@ -41,9 +44,15 @@
       </item>
       <item path="include/lib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/pgmlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ppmlib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="lib.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="pgmlib.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -72,9 +81,15 @@
       </item>
       <item path="include/lib.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/pgmlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/ppmlib.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="lib.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="pgmlib.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>

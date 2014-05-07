@@ -84,7 +84,7 @@ typedef enum
 	dark_purple=5,dark_pink=5,dark_magenta=5,
 	dark_yellow=6,
 	dark_white=7,
-	gray=8,
+	gray_color=8,
 	blue=9,
 	green=10,
 	aqua=11,cyan=11,

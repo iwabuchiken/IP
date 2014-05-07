@@ -24,6 +24,10 @@
 #include "include/img_lib.h"
 #endif
 
+#ifndef PPMLIB_H
+#include "include/ppmlib.h"
+#endif
+
 
 
 
@@ -34,6 +38,7 @@
  prototypes 
  *******************************/
 void set_Root(void);
+void on_Destroy(void);
 
 void _main_RGB(char **);
 void _main_SrcFile(char **);
@@ -47,7 +52,7 @@ void _test_Realpath(void);
 void _test_MkDir(void);
 
 void _main_DstFile(char **);
-
+void _main_GetPGM(void);
 
 //////////////////////////////////////////
 
@@ -63,6 +68,11 @@ char *IMAGE_ROOT_DST;
 char *IMAGE_FILE_DST;
 
 int * RGB[3];
+
+PGM *PGM_src;
+PPM *PPM_dst;
+
+//pixval pval;
 
 int main(int argc, char** argv) {
 
@@ -157,6 +167,18 @@ int main(int argc, char** argv) {
      *******************************/
     _main_DstFile(argv);
 	    
+    /*******************************
+     Get: PGM instance
+     *******************************/
+    _main_GetPGM();
+//    PGM_src = (PGM *) malloc(sizeof(PGM) * 1);
+//    
+//    res_i = get_PGM_2(IMAGE_FILE_SRC, PGM_src);
+//    
+//    //log
+//    printf("[%s:%d] get_PGM_2 => %d\n", base_name(__FILE__), __LINE__, res_i);
+
+    
     
 	    
     /*******************************
@@ -181,6 +203,8 @@ int main(int argc, char** argv) {
 //    _test_ConsoleColor();
     
     printf("done\n");
+    
+    on_Destroy();
     
     return (EXIT_SUCCESS);
 }
@@ -739,3 +763,78 @@ void _main_DstFile(char **argv)
     consolColor_Reset();
     
 }//void _main_DstFile(char **argv)
+
+void _main_GetPGM()
+{
+    int res_i;
+    
+    PGM_src = (PGM *) malloc(sizeof(PGM) * 1);
+    
+    res_i = get_PGM_2(IMAGE_FILE_SRC, PGM_src);
+    
+    //log
+    printf("[%s:%d] get_PGM_2 => %d\n", base_name(__FILE__), __LINE__, res_i);
+    
+    // result
+    if (res_i == -2) {
+	
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] The file doesn't exist, or can't open: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_FILE_SRC);
+	
+	//log
+	printf("[%s:%d] Sorry. The program quits\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+    
+    } else if (res_i == -1) {
+	
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] The file format is not P5: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_FILE_SRC);
+	
+	//log
+	printf("[%s:%d] Sorry. The program quits\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+    
+    } else {
+	
+	consolColor_Change(black, white);
+
+	//log
+	printf("[%s:%d] PGM => obtained: filename=%s\n",
+		base_name(__FILE__), __LINE__, PGM_src->file_name);
+
+	consolColor_Reset();
+	
+    }
+
+    
+}
+
+void on_Destroy(void)
+{
+    free(ROOT);
+
+    free(IMAGE_ROOT_SRC);
+    free(IMAGE_FILE_SRC);
+
+    free(IMAGE_ROOT_DST);
+    free(IMAGE_FILE_DST);
+
+    free(RGB);
+//int * RGB[3];
+
+    free(PGM_src);
+    free(PPM_dst);
+    
+}
