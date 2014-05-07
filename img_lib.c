@@ -64,9 +64,9 @@ int _opt_RGB(char **argv, int *rgb[3])
 	// Inspect args
 	while(*(argv + increment) != NULL) {
 
-	    //log
-	    printf("[%s:%d] argv => %s\n",
-			    base_name(__FILE__), __LINE__, *(argv + increment));
+//	    //log
+//	    printf("[%s:%d] argv => %s\n",
+//			    base_name(__FILE__), __LINE__, *(argv + increment));
 
 	    int res = strcmp(*(argv + increment), opt_RGB);
 
@@ -77,10 +77,10 @@ int _opt_RGB(char **argv, int *rgb[3])
 		    // Get the next arg to "-rgb" switch
 		    if (*(argv + increment) != NULL) {
 
-			    //log
-			    printf("[%s:%d] RGB option => %s\n",
-					    base_name(__FILE__), __LINE__, *(argv + increment));
-//						base_name(__FILE__), __LINE__, *argv);
+//			    //log
+//			    printf("[%s:%d] RGB option => %s\n",
+//					    base_name(__FILE__), __LINE__, *(argv + increment));
+////						base_name(__FILE__), __LINE__, *argv);
 
 			    res = validate_RGBStringFormat((*(argv + increment)));
 
@@ -103,9 +103,9 @@ int _opt_RGB(char **argv, int *rgb[3])
 
 				    strcpy(rgb_values_string, *(argv + increment));
 
-				    //log
-				    printf("[%s:%d] Prepared => rgb_values_string (= %s)\n",
-						    base_name(__FILE__), __LINE__, rgb_values_string);
+//				    //log
+//				    printf("[%s:%d] Prepared => rgb_values_string (= %s)\n",
+//						    base_name(__FILE__), __LINE__, rgb_values_string);
 
 			    } else {
 
@@ -138,15 +138,15 @@ int _opt_RGB(char **argv, int *rgb[3])
 
 	//////////////////////////////////////
 
-	//log
-	printf("[%s:%d] opt_rgb => %d\n", base_name(__FILE__), __LINE__, opt_rgb);
+//	//log
+//	printf("[%s:%d] opt_rgb => %d\n", base_name(__FILE__), __LINE__, opt_rgb);
 
 	if (opt_rgb == 1) {
 
 		int count;
 
-		//log
-		printf("[%s:%d] Calling... str_split_3\n", base_name(__FILE__), __LINE__);
+//		//log
+//		printf("[%s:%d] Calling... str_split_3\n", base_name(__FILE__), __LINE__);
 
 
 		rgb_values_array = str_split_3(rgb_values_string, ',', &count);
@@ -169,8 +169,8 @@ int _opt_RGB(char **argv, int *rgb[3])
 //		rgb[1] = atoi(rgb_values_array[1]);
 //		rgb[2] = atoi(rgb_values_array[2]);
 
-		//log
-		printf("[%s:%d] rgb[0] => %d\n", base_name(__FILE__), __LINE__, rgb[0]);
+//		//log
+//		printf("[%s:%d] rgb[0] => %d\n", base_name(__FILE__), __LINE__, rgb[0]);
 
 	}//if (opt_rgb == 1)
 
@@ -229,8 +229,8 @@ int validate_RGBStringFormat(char *string)
 //char * _opt_Src_File(char * argv)
 char * _opt_Src_File(char ** argv, char *current_dir)
 {
-    //log
-    printf("[%s:%d] Starts => _opt_Src_File\n", base_name(__FILE__), __LINE__);
+//    //log
+//    printf("[%s:%d] Starts => _opt_Src_File\n", base_name(__FILE__), __LINE__);
 
     
     char *opt_SrcFile = "-src";
@@ -250,8 +250,8 @@ char * _opt_Src_File(char ** argv, char *current_dir)
     // Inspect args
     while(*(argv + increment) != NULL) {
 
-    //log
-    printf("[%s:%d] *argv => %s\n", base_name(__FILE__), __LINE__, *(argv + increment));
+//    //log
+//    printf("[%s:%d] *argv => %s\n", base_name(__FILE__), __LINE__, *(argv + increment));
 
 
 	int res = strcmp(*(argv + increment), opt_SrcFile);
@@ -314,9 +314,9 @@ char * _opt_Src_File(char ** argv, char *current_dir)
 
     }//while(*argv != NULL)
 
-    //log
-    printf("[%s:%d] while loop => ended (flag_src=%d)\n",
-		base_name(__FILE__), __LINE__, flag_src);
+//    //log
+//    printf("[%s:%d] while loop => ended (flag_src=%d)\n",
+//		base_name(__FILE__), __LINE__, flag_src);
 
     
     /////////////////////////////////////////
@@ -353,9 +353,9 @@ char * _opt_Src_File(char ** argv, char *current_dir)
 	    *(src_file_path + strlen(argv[1])) = '\0';
 //	    *(src_file_path + strlen(argv[1]) + 1) = '\0';
 	    
-	    //log
-	    printf("[%s:%d] strcpy => done (src_file_path=%s)\n",
-		    base_name(__FILE__), __LINE__, src_file_path);
+//	    //log
+//	    printf("[%s:%d] strcpy => done (src_file_path=%s)\n",
+//		    base_name(__FILE__), __LINE__, src_file_path);
 
     }
 
@@ -376,16 +376,16 @@ char * _opt_Src_File(char ** argv, char *current_dir)
     char sep = get_FileSep();
     int count;
 
-    //log
-    printf("[%s:%d] sep => %c\n", base_name(__FILE__), __LINE__, sep);
-
-    //log
-    printf("[%s:%d] Calling => str_split_3()\n", base_name(__FILE__), __LINE__);
+//    //log
+//    printf("[%s:%d] sep => %c\n", base_name(__FILE__), __LINE__, sep);
+//
+//    //log
+//    printf("[%s:%d] Calling => str_split_3()\n", base_name(__FILE__), __LINE__);
 
     str_split_3(src_file_path, sep, &count);
 
-    //log
-    printf("[%s:%d] done => str_split_3()\n", base_name(__FILE__), __LINE__);
+//    //log
+//    printf("[%s:%d] done => str_split_3()\n", base_name(__FILE__), __LINE__);
 
     
     if (count < 2) {
@@ -437,7 +437,7 @@ char * _opt_Dst_File
 #ifdef DEBUG
 	//log
 	printf("[%s:%d] *(argv + increment) => %s\n",
-			basename_2(__FILE__), __LINE__, *(argv + increment));
+			base_name(__FILE__), __LINE__, *(argv + increment));
 #endif
 
 	// Inspect args
@@ -448,7 +448,7 @@ char * _opt_Dst_File
 
 #ifdef DEBUG
 		//log
-		printf("[%s:%d] res => %d\n", basename_2(__FILE__), __LINE__, res);
+		printf("[%s:%d] res => %d\n", base_name(__FILE__), __LINE__, res);
 #endif
 
 		if (res == 0) {
@@ -463,19 +463,19 @@ char * _opt_Dst_File
 
 				//log
 				printf("[%s:%d] source option => %s\n",
-						basename_2(__FILE__), __LINE__, *(argv + increment));
-//						basename_2(__FILE__), __LINE__, *argv);
+						base_name(__FILE__), __LINE__, *(argv + increment));
+//						base_name(__FILE__), __LINE__, *argv);
 #ifdef DEBUG
 				//log
 				printf("[%s:%d] strlen(*(argv + increment)) => %d\n",
-						basename_2(__FILE__), __LINE__, strlen(*(argv + increment)));
+						base_name(__FILE__), __LINE__, strlen(*(argv + increment)));
 #endif
 
 				dst_file_path = malloc(sizeof(char) * strlen(*(argv + increment)));
 
 #ifdef DEBUG
 				//log
-				printf("[%s:%d] malloc => done\n", basename_2(__FILE__), __LINE__);
+				printf("[%s:%d] malloc => done\n", base_name(__FILE__), __LINE__);
 #endif
 
 				strcpy(dst_file_path, *(argv + increment));
@@ -483,7 +483,7 @@ char * _opt_Dst_File
 
 #ifdef DEBUG
 				//log
-				printf("[%s:%d] strcpy => done\n", basename_2(__FILE__), __LINE__);
+				printf("[%s:%d] strcpy => done\n", base_name(__FILE__), __LINE__);
 #endif
 				// Value is given for "-dst" switch
 				//	=> set the flag to 1
@@ -496,7 +496,7 @@ char * _opt_Dst_File
 
 				//log
 				printf("[%s:%d] Source file option => corresponding value missing\n",
-						basename_2(__FILE__), __LINE__);
+						base_name(__FILE__), __LINE__);
 
 				return NULL;
 
@@ -511,13 +511,6 @@ char * _opt_Dst_File
 
 //			// No "-dst" switch => First argument(next to the program name)
 //			//	is used as the source pgm file name
-//#ifdef DEBUG
-//
-//	//log
-//	printf("[%s:%d] increment => %d\n", basename_2(__FILE__), __LINE__, increment);
-//
-//
-//#endif
 //
 //			src_file_path = malloc(sizeof(char) * strlen(*(argv + increment)));
 //
@@ -544,28 +537,10 @@ char * _opt_Dst_File
 
 		// No "-dst" switch => First argument(next to the program name)
 		//	is used as the source pgm file name
-#ifdef DEBUG
-
-//log
-printf("[%s:%d] increment => %d\n", basename_2(__FILE__), __LINE__, increment);
-
-
-#endif
+	
 		// Reset the incrementor to 1
+	    
 		increment = 1;
-
-//		dst_file_path = malloc(sizeof(char) * strlen(src_file_path));
-//		dst_file_path = malloc(sizeof(char) * strlen(*(argv + increment)));
-
-//		strcpy(dst_file_path, src_file_path);
-
-#ifdef DEBUG
-
-	//log
-	printf("[%s:%d] dst_file_path => %s\n",
-			basename_2(__FILE__), __LINE__, dst_file_path);
-
-#endif
 
 		/************************************
 		 * - Right-split the src_file_path
@@ -587,13 +562,13 @@ printf("[%s:%d] increment => %d\n", basename_2(__FILE__), __LINE__, increment);
 
 			//log
 			printf("[%s:%d] *splits => %s\n",
-					basename_2(__FILE__), __LINE__, *splits);
+					base_name(__FILE__), __LINE__, *splits);
 
 
 			int len = strlen(*splits) + strlen(ppm_extension) + 1;
 //
 			//log
-			printf("[%s:%d] len => %d\n", basename_2(__FILE__), __LINE__, len);
+			printf("[%s:%d] len => %d\n", base_name(__FILE__), __LINE__, len);
 
 			dst_file_path = malloc(sizeof(char) * len);
 
@@ -601,7 +576,7 @@ printf("[%s:%d] increment => %d\n", basename_2(__FILE__), __LINE__, increment);
 
 			//log
 			printf("[%s:%d] dst_file_path => %s\n",
-					basename_2(__FILE__), __LINE__, dst_file_path);
+					base_name(__FILE__), __LINE__, dst_file_path);
 
 
 //			dst_file_path = malloc(sizeof(char) *

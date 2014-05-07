@@ -126,8 +126,8 @@ char** str_split_3
     delim[0] = a_delim;
     delim[1] = 0;
 
-    //log
-    printf("[%s:%d] delim => %s\n", base_name(__FILE__), __LINE__, delim);
+//    //log
+//    printf("[%s:%d] delim => %s\n", base_name(__FILE__), __LINE__, delim);
 
     
     char *a_str_new;
@@ -144,8 +144,8 @@ char** str_split_3
     /************************************
      * operations
     ************************************/
-    //log
-    printf("[%s:%d] a_str = %s\n", base_name(__FILE__), __LINE__, a_str);
+//    //log
+//    printf("[%s:%d] a_str = %s\n", base_name(__FILE__), __LINE__, a_str);
 
     
     a_str_new = (char *) malloc(sizeof(char) * (strlen(a_str) + 1));
@@ -323,8 +323,8 @@ char* dir_name(char* fullpath)
 //	char *base = strrchr(fullpath, '/');
 
 	//log
-        printf("[%s:%d] fullpath = %s / separator = %c\n",
-		base_name(__FILE__), __LINE__, fullpath, separator);
+//        printf("[%s:%d] fullpath = %s / separator = %c\n",
+//		base_name(__FILE__), __LINE__, fullpath, separator);
 
 	
 	if (base == NULL) {
@@ -337,13 +337,13 @@ char* dir_name(char* fullpath)
 	}
 
 	
-	//log
-        printf("[%s:%d] base => %s\n", base_name(__FILE__), __LINE__, base);
+//	//log
+//        printf("[%s:%d] base => %s\n", base_name(__FILE__), __LINE__, base);
 	
 	if (strlen(base) > 1) {
 	    
-	    printf("[%s:%d] (base + 1) => %s\n",
-		    base_name(__FILE__), __LINE__, (base + 1));
+//	    printf("[%s:%d] (base + 1) => %s\n",
+//		    base_name(__FILE__), __LINE__, (base + 1));
 
 	}
 	
@@ -446,7 +446,7 @@ int fileExists(char *fpath)
     if ( (fp = fopen( fpath, "r" ))==NULL ) {
 	    //log
 	    printf("[%s:%d] The file doesn't exist: %s\n",
-//				basename_2(__FILE__), __LINE__, fpath_stripped);
+//				base_name(__FILE__), __LINE__, fpath_stripped);
 			    base_name(__FILE__), __LINE__, fpath);
 
 	    return 0;
@@ -461,4 +461,101 @@ int fileExists(char *fpath)
 
 }//enum RetVals fileExists(char *fpath)
 
+/************************************
+ * char ** str_split_r_2
+ * @param
+ * 		position		=> Split at the Xth delim from the right
+ * 		num_of_tokens	=> Number of tokens obtained
+ *
+ * @return NULL => delim not found in string
+************************************/
+char ** str_split_r_2
+(char *string, char delim, int position, int *num_of_tokens)
+{
+	char **result;
 
+	char *bottom = strrchr(string, delim);
+
+	//log
+	printf("[%s:%d] bottom => %s\n", base_name(__FILE__), __LINE__, bottom);
+
+	/************************************
+	 * If strrchr returns a NULL pointer
+	 * 	=> return NULL
+	************************************/
+	if (bottom == NULL) {
+
+		return NULL;
+
+	}
+
+	/************************************
+	 * malloc
+	************************************/
+	result = malloc(sizeof(char*) * 2);
+
+	/************************************
+	 * diff
+	************************************/
+	int dif = bottom - string;
+
+	//log
+	printf("[%s:%d] dif => %d\n", base_name(__FILE__), __LINE__, dif);
+
+	/************************************
+	 * first token
+	************************************/
+	char *token_1 = malloc(sizeof(char) * (dif + 1));
+
+	strncpy(token_1, string, dif);
+	*(token_1 + dif) = '\0';
+
+	//log
+	printf("[%s:%d] token_1 => %s\n", base_name(__FILE__), __LINE__, token_1);
+
+	/************************************
+	 * Build: tokens
+	************************************/
+	*(result) = strdup(token_1);
+	*(result + 1) = strdup(bottom + 1);
+
+
+//		return string;
+	return result;
+
+}//char ** str_split_r_2
+
+/************************************
+ * REF concat() http://stackoverflow.com/questions/8465006/how-to-concatenate-2-strings-in-c answered Dec 11 '11 at 15:20
+************************************/
+char* concat(char *s1, char *s2)
+{
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
+    char *result = malloc(len1+len2+1);//+1 for the zero-terminator
+
+    if (result == NULL) {
+
+    	//log
+		printf("[%s:%d] malloc => NULL\n", base_name(__FILE__), __LINE__);
+
+		exit(1);
+
+	}
+
+
+    //in real code you would check for errors in malloc here
+    memcpy(result, s1, len1);
+    memcpy(result+len1, s2, len2+1);//+1 to copy the null-terminator
+    return result;
+}
+
+char get_FileSeparator()
+{
+#ifdef _WIN32
+	return '\\';
+#else
+	return '/';
+#endif
+
+}

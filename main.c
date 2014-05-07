@@ -35,12 +35,18 @@
  *******************************/
 void set_Root(void);
 
+void _main_RGB(char **);
+void _main_SrcFile(char **);
+void _main_DstFile(char **);
+
 void _test_FileSep(void);
 void _test_BaseName(void);
 void _test_ConsoleColor(void);
 void _test_IntTypePointer(void);
 void _test_Realpath(void);
 void _test_MkDir(void);
+
+
 
 //////////////////////////////////////////
 
@@ -55,6 +61,7 @@ char *IMAGE_FILE_SRC;
 char *IMAGE_ROOT_DST;
 char *IMAGE_FILE_DST;
 
+int * RGB[3];
 
 int main(int argc, char** argv) {
 
@@ -67,6 +74,12 @@ int main(int argc, char** argv) {
     
     set_Root();
 
+    /*******************************
+     Function variables
+     *******************************/
+    int len;	// used in malloc()
+    
+    
 //    _test_Realpath();
 //    _test_MkDir();
     
@@ -99,7 +112,7 @@ int main(int argc, char** argv) {
     // Variables
 
     /////////////////////////////////////
-    int * rgb_vals[3];
+//    int * rgb_vals[3];
 //	int ** rgb_vals;
 
     char *fpath_src;	// source pgm file path
@@ -124,191 +137,107 @@ int main(int argc, char** argv) {
     // Opt: rgb values
 
     /////////////////////////////////////
-    res_i = _opt_RGB(argv, rgb_vals);
-
-//	//log
-//	printf("[%s:%d] res => %d\n", base_name(__FILE__), __LINE__, res_i);
-
-	// Set: flag for RGV
-    flag_RGV = res_i;
-
-    if (res_i == 1) {
-
-	    //log
-	    printf("\n");
-
-	    char rgb_message[20];
-
-	    sprintf(rgb_message, "rgb => %d,%d,%d",
-					    rgb_vals[0],
-					    rgb_vals[1],
-					    rgb_vals[2]
-					    );
-
-	    consolColor_Change(black, white);
-
-	    //log
-	    printf("[%s:%d] rgb set (%s)\n", base_name(__FILE__), __LINE__, rgb_message);
-
-	    consolColor_Reset();
-
-//		for (i = 0; i < 3; ++i) {
-//
-//			//log
-//			printf("[%s:%d] rgb[%d] = %d\n",
-//					base_name(__FILE__), __LINE__, i, rgb_vals[i]);
-//
-//		}
-
-	    //log
-	    printf("\n");
-
-    } else {
-
-	    //log
-	    printf("[%s:%d] rgb_vals => not obtained\n", base_name(__FILE__), __LINE__);
-
-	    for (i = 0; i < 3; ++i) {
-
-		    *(rgb_vals[i]) = 100;
-//			rgb_vals[i] = 100;
-
-	    }
-
-	    //log
-	    printf("[%s:%d] rgb_vals => Set to default(=100)\n",
-			    base_name(__FILE__), __LINE__);
-
-    }//if (res_i == 1)
-
+    _main_RGB(argv);
+    
     /////////////////////////////////////
 
     // Opt: source file
 
     /////////////////////////////////////
-    //log
-    printf("[%s:%d] Calling => _opt_Src_File()\n", base_name(__FILE__), __LINE__);
+    _main_SrcFile(argv);
 
-    fpath_src = _opt_Src_File(argv, ROOT);
-//    fpath_src = _opt_Src_File(argv, dir_name(__FILE__));
+    /*******************************
+         Get: IMAGE_ROOT_DST
+     *******************************/
+    _main_DstFile(argv);
+    
+    IMAGE_FILE_DST = _opt_Dst_File(argv, ROOT, IMAGE_FILE_SRC);
+    
+    if (IMAGE_FILE_DST == NULL) {
 
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_FILE_DST => NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+	
+    }
+
+    
     consolColor_Change(black, white);
+    
     //log
-    printf("\n[%s:%d] fpath_src => %s\n\n", base_name(__FILE__), __LINE__, fpath_src);
+    printf("[%s:%d] IMAGE_FILE_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
 
     consolColor_Reset();
     
     /*******************************
-     Validate: source file, path
+	Validate: IMAGE_ROOT_DST => exists?
      *******************************/
-    /*******************************
-	Set: IMAGE_ROOT_SRC
-     *******************************/
-    char *tmp = dir_name(fpath_src);
+    IMAGE_ROOT_DST = dir_name(IMAGE_FILE_DST);
+//    char *dname_dst_m = dir_name(IMAGE_FILE_DST);
     
-    if (tmp != NULL) {
-	
-	//log
-	printf("[%s:%d] tmp => != NULL (=%s)\n", base_name(__FILE__), __LINE__, tmp);
+    if (IMAGE_ROOT_DST == NULL) {
 
-	
-	int len = strlen(tmp);
-	
-	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
-	
-	strcpy(IMAGE_ROOT_SRC, tmp);
-	
-	*(IMAGE_ROOT_SRC + len) = '\0';
-	
-	consolColor_Change(black, white);
-	
+	consolColor_Change(black, red);
+
 	//log
-	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	printf("[%s:%d] IMAGE_ROOT_DST => NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+	
+    }
+    
+//    //log
+//    printf("[%s:%d] IMAGE_ROOT_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+
+    // validate
+    res_i = dirExists(IMAGE_ROOT_DST);
+    
+    if (res_i != 1) {
+
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
 	
 	consolColor_Reset();
+	
+	
+	
+	printf("[%s:%d] Sorry. Program quits.\n",
+		base_name(__FILE__), __LINE__);
+
+	
+	exit(-1);
 	
     } else {
 	
 	//log
-	printf("[%s:%d] tmp =>  NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] IMAGE_ROOT_DST => exists: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
 	
-	int len = strlen(ROOT);
-	
-	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
-	
-	strcpy(IMAGE_ROOT_SRC, tmp);
-	
-	*(IMAGE_ROOT_SRC + len) = '\0';
-	
-	//log
-	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	consolColor_Change(black, white);
 
-    }
-    
-    consolColor_Reset();
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST: set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
 
-    /*******************************
-	Validate: IMAGE_ROOT_SRC => exists?
-     *******************************/
-    res_i = dirExists(IMAGE_ROOT_SRC);
-    
-    //log
-    printf("[%s:%d] dirExists => %d\n", base_name(__FILE__), __LINE__, res_i);
-    
-    // If IMAGE_ROOT_SRC doesn't exist
-    //	=> show message, and exit the program
-    if (res_i != 1) {
-	
-	consolColor_Change(black, red);
-	
-	//log
-	printf("[%s:%d] IMAGE_ROOT_SRC => doesn't exist: %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
-	
-	//log
-	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
-	
 	consolColor_Reset();
-	
-	exit(-1);
 
     }
 
-    /*******************************
-	Validate: source pgm file => exists?
-     *******************************/
-    res_i = fileExists(fpath_src);
-    
-    //log
-    printf("[%s:%d] fileExists => %d\n", base_name(__FILE__), __LINE__, res_i);
 
-    // If source pgm file doesn't exist
-    //	=> show message, and exit the program
-    if (res_i != 1) {
-	
-	consolColor_Change(black, red);
-	
-	//log
-	printf("[%s:%d] source pgm file => doesn't exist: %s\n",
-		base_name(__FILE__), __LINE__, fpath_src);
-	
-	//log
-	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
-	
-	consolColor_Reset();
-	
-	exit(-1);
-
-    }
+//    free(dname_dst_m);
     
-    /*******************************
-         Get: IMAGE_ROOT_DST
-     *******************************/
-    /*******************************
-	Validate: IMAGE_ROOT_DST => exists?
-     *******************************/
     /*******************************
 	Validate: dst pgm file => exists?
      *******************************/
@@ -468,4 +397,205 @@ void set_Root(void)
     }
 
 
+}
+
+void _main_RGB(char **argv)
+{
+    int res_i;
+    int flag_RGV;
+    
+    int i;  // counter
+    
+     res_i = _opt_RGB(argv, RGB);
+//    res_i = _opt_RGB(argv, rgb_vals);
+
+//	//log
+//	printf("[%s:%d] res => %d\n", base_name(__FILE__), __LINE__, res_i);
+
+	// Set: flag for RGV
+    flag_RGV = res_i;
+
+    if (res_i == 1) {
+
+	    //log
+	    printf("\n");
+
+	    char rgb_message[20];
+
+	    sprintf(rgb_message, "rgb => %d,%d,%d",
+					    RGB[0],
+					    RGB[1],
+					    RGB[2]
+					    );
+
+	    consolColor_Change(black, white);
+
+	    //log
+	    printf("[%s:%d] rgb set (%s)\n", base_name(__FILE__), __LINE__, rgb_message);
+
+	    consolColor_Reset();
+
+	    //log
+	    printf("\n");
+
+    } else {
+
+	    //log
+	    printf("[%s:%d] rgb_vals => not obtained\n", base_name(__FILE__), __LINE__);
+
+	    for (i = 0; i < 3; ++i) {
+
+		    *(RGB[i]) = 100;
+//			rgb_vals[i] = 100;
+
+	    }
+
+	    //log
+	    printf("[%s:%d] rgb_vals => Set to default(=100)\n",
+			    base_name(__FILE__), __LINE__);
+
+    }//if (res_   
+}
+
+void _main_SrcFile(char **argv)
+{
+    int len;
+    int res_i;
+    
+    char *fpath_src_m = _opt_Src_File(argv, ROOT);
+//    fpath_src = _opt_Src_File(argv, ROOT);
+//    fpath_src = _opt_Src_File(argv, dir_name(__FILE__));
+
+    consolColor_Change(black, white);
+    //log
+    printf("\n[%s:%d] fpath_src => %s\n\n", base_name(__FILE__), __LINE__, fpath_src_m);
+
+    // Copy to IMAGE_FILE_SRC
+    char *sep = get_FileSep_Str();
+    
+    len = strlen(fpath_src_m);
+    
+    IMAGE_FILE_SRC = (char *) malloc(sizeof(char) * (len + 1));
+    
+    strcpy(IMAGE_FILE_SRC, fpath_src_m);
+    
+    *(IMAGE_FILE_SRC + len) = '\0';
+    
+    //log
+    printf("[%s:%d] IMAGE_FILE_SRC => %s\n", base_name(__FILE__), __LINE__, IMAGE_FILE_SRC);
+
+    consolColor_Reset();
+
+    free(sep);
+    
+    /*******************************
+     Validate: source file, path
+     *******************************/
+    /*******************************
+	Set: IMAGE_ROOT_SRC
+     *******************************/
+    char *tmp = dir_name(fpath_src_m);
+    
+    if (tmp != NULL) {
+	
+//	//log
+//	printf("[%s:%d] tmp => != NULL (=%s)\n", base_name(__FILE__), __LINE__, tmp);
+
+	
+	int len = strlen(tmp);
+	
+	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
+	
+	strcpy(IMAGE_ROOT_SRC, tmp);
+	
+	*(IMAGE_ROOT_SRC + len) = '\0';
+	
+	consolColor_Change(black, white);
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	
+	consolColor_Reset();
+	
+    } else {
+	
+	//log
+	printf("[%s:%d] tmp =>  NULL\n", base_name(__FILE__), __LINE__);
+	
+	int len = strlen(ROOT);
+	
+	IMAGE_ROOT_SRC = (char *) malloc(sizeof(char) * (len + 1));
+	
+	strcpy(IMAGE_ROOT_SRC, tmp);
+	
+	*(IMAGE_ROOT_SRC + len) = '\0';
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+
+    }
+    
+    consolColor_Reset();
+
+    /*******************************
+	Validate: IMAGE_ROOT_SRC => exists?
+     *******************************/
+    res_i = dirExists(IMAGE_ROOT_SRC);
+    
+    //log
+    printf("[%s:%d] dirExists => %d\n", base_name(__FILE__), __LINE__, res_i);
+    
+    // If IMAGE_ROOT_SRC doesn't exist
+    //	=> show message, and exit the program
+    if (res_i != 1) {
+	
+	consolColor_Change(black, red);
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_SRC => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_SRC);
+	
+	//log
+	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
+	
+	consolColor_Reset();
+	
+	exit(-1);
+
+    }
+
+    /*******************************
+	Validate: source pgm file => exists?
+     *******************************/
+    res_i = fileExists(fpath_src_m);
+    
+    //log
+    printf("[%s:%d] fileExists => %d\n", base_name(__FILE__), __LINE__, res_i);
+
+    // If source pgm file doesn't exist
+    //	=> show message, and exit the program
+    if (res_i != 1) {
+	
+	consolColor_Change(black, red);
+	
+	//log
+	printf("[%s:%d] source pgm file => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, fpath_src_m);
+	
+	//log
+	printf("[%s:%d] Sorry. Program quits. Thank you\n", base_name(__FILE__), __LINE__);
+	
+	consolColor_Reset();
+	
+	exit(-1);
+
+    }//if (res_i != 1)
+        
+}//void _main_SrcFile(char **, char *)
+
+void _main_DstFile(char **argv)
+{
+    
 }

@@ -152,6 +152,10 @@ int dirExists(char *);
 
 int fileExists(char *);
 
+char ** str_split_r_2(char *, char, int, int *);
+
+char* concat(char *, char *);
+
 #ifdef	__cplusplus
 }
 #endif
