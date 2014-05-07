@@ -38,7 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/img_lib.o \
 	${OBJECTDIR}/lib.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/pgmlib.o
+	${OBJECTDIR}/pgmlib.o \
+	${OBJECTDIR}/ppmlib.o
 
 
 # C Compiler Flags
@@ -84,6 +85,11 @@ ${OBJECTDIR}/pgmlib.o: pgmlib.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/pgmlib.o pgmlib.c
+
+${OBJECTDIR}/ppmlib.o: ppmlib.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ppmlib.o ppmlib.c
 
 # Subprojects
 .build-subprojects:

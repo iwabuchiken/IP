@@ -192,7 +192,11 @@ int main(int argc, char** argv) {
 //    printf("[%s:%d] PPM_dst->max_brightness => %d\n",
 //	    base_name(__FILE__), __LINE__, PPM_dst->max_brightness);
 
+    res_i = save_PPM(IMAGE_FILE_DST, PPM_dst);
     
+    //log
+    printf("[%s:%d] save ppm => %d\n", base_name(__FILE__), __LINE__, res_i);
+
     
 	    
     /*******************************
@@ -200,6 +204,11 @@ int main(int argc, char** argv) {
     *******************************/
 //	_test_IntTypePointer();
 	
+//    //log
+//    printf("[%s:%d] base_name(IMAGE_FILE_DST) => %s\n",
+//	    base_name(__FILE__), __LINE__, base_name_2(IMAGE_FILE_DST));
+////    base_name(__FILE__), __LINE__, base_name(IMAGE_FILE_DST));
+
     printf("done\n");
     
     on_Destroy();

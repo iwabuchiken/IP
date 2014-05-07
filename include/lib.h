@@ -133,7 +133,9 @@ typedef enum
 
 ///////////////////////////////////////////////////////
 char *get_FileSep_Str(void);
-char* base_name(char*);
+char* base_name(char*);	    // abc\def.txt ==> \def.txt
+char* base_name_2(char*);   // abc\def.txt ==> def.txt (No separator)
+
 char get_FileSep(void);
 
 int textcolor(void);

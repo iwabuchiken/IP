@@ -50,6 +50,10 @@ extern "C" {
 //
 //    } PPM;
 
+    /*******************************
+     * Prototypes
+     *******************************/
+    int save_PPM(char *, PPM *);
 
 #ifdef	__cplusplus
 }

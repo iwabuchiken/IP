@@ -47,6 +47,32 @@ char* base_name(char* fullpath)
 
 }
 
+char* base_name_2(char* fullpath)
+{
+    char sep = get_FileSep();
+
+    char *base = strrchr(fullpath, sep);
+
+    if (base == NULL) {
+
+	    return fullpath;
+
+    }
+
+    if (*base == '\\') {
+
+	return (base + 1);
+	
+    } else {
+	
+	return base;
+	
+    }
+    
+//    return (base + 1);
+
+}
+
 char get_FileSep()
 {
 #ifdef _WIN32
