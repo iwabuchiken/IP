@@ -151,97 +151,6 @@ int main(int argc, char** argv) {
      *******************************/
     _main_DstFile(argv);
     
-    IMAGE_FILE_DST = _opt_Dst_File(argv, ROOT, IMAGE_FILE_SRC);
-    
-    if (IMAGE_FILE_DST == NULL) {
-
-	consolColor_Change(black, red);
-
-	//log
-	printf("[%s:%d] IMAGE_FILE_DST => NULL\n", base_name(__FILE__), __LINE__);
-	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
-
-	consolColor_Reset();
-	
-	exit(-1);
-	
-    }
-
-    
-    consolColor_Change(black, white);
-    
-    //log
-    printf("[%s:%d] IMAGE_FILE_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
-
-    consolColor_Reset();
-    
-    /*******************************
-	Validate: IMAGE_ROOT_DST => exists?
-     *******************************/
-    IMAGE_ROOT_DST = dir_name(IMAGE_FILE_DST);
-//    char *dname_dst_m = dir_name(IMAGE_FILE_DST);
-    
-    if (IMAGE_ROOT_DST == NULL) {
-
-	consolColor_Change(black, red);
-
-	//log
-	printf("[%s:%d] IMAGE_ROOT_DST => NULL\n", base_name(__FILE__), __LINE__);
-	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
-
-	consolColor_Reset();
-	
-	exit(-1);
-	
-    }
-    
-//    //log
-//    printf("[%s:%d] IMAGE_ROOT_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
-
-    // validate
-    res_i = dirExists(IMAGE_ROOT_DST);
-    
-    if (res_i != 1) {
-
-	consolColor_Change(black, red);
-
-	//log
-	printf("[%s:%d] IMAGE_ROOT_DST => doesn't exist: %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
-	
-	consolColor_Reset();
-	
-	
-	
-	printf("[%s:%d] Sorry. Program quits.\n",
-		base_name(__FILE__), __LINE__);
-
-	
-	exit(-1);
-	
-    } else {
-	
-	//log
-	printf("[%s:%d] IMAGE_ROOT_DST => exists: %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
-	
-	consolColor_Change(black, white);
-
-	//log
-	printf("[%s:%d] IMAGE_ROOT_DST: set => %s\n",
-		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
-
-	consolColor_Reset();
-
-    }
-
-
-//    free(dname_dst_m);
-    
-    /*******************************
-	Validate: dst pgm file => exists?
-     *******************************/
-    
     /*******************************
      Tests
     *******************************/
@@ -597,5 +506,157 @@ void _main_SrcFile(char **argv)
 
 void _main_DstFile(char **argv)
 {
+    int res_i;
     
-}
+    IMAGE_FILE_DST = _opt_Dst_File(argv, ROOT, IMAGE_FILE_SRC);
+    
+    if (IMAGE_FILE_DST == NULL) {
+
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_FILE_DST => NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+	
+    }
+
+    
+    consolColor_Change(black, white);
+    
+    //log
+    printf("[%s:%d] IMAGE_FILE_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_FILE_DST);
+
+    consolColor_Reset();
+    
+    /*******************************
+	Validate: IMAGE_ROOT_DST => exists?
+     *******************************/
+    IMAGE_ROOT_DST = dir_name(IMAGE_FILE_DST);
+//    char *dname_dst_m = dir_name(IMAGE_FILE_DST);
+    
+    if (IMAGE_ROOT_DST == NULL) {
+
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST => NULL\n", base_name(__FILE__), __LINE__);
+	printf("[%s:%d] Sorry. Program quits.\n", base_name(__FILE__), __LINE__);
+
+	consolColor_Reset();
+	
+	exit(-1);
+	
+    }
+    
+//    //log
+//    printf("[%s:%d] IMAGE_ROOT_DST => %s\n", base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+
+    // validate
+    res_i = dirExists(IMAGE_ROOT_DST);
+    
+    if (res_i != 1) {	// IMAGE_ROOT_DST => doesn't exist
+
+	consolColor_Change(black, red);
+
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST => doesn't exist: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+	
+	consolColor_Reset();
+	
+	res_i = _opt_ForceCreate_RootDst(argv);
+	
+	if (res_i == 1) {   // "-f" option => set
+
+	    //log
+	    printf("[%s:%d] '-f' option is set. Creating the dst dir...\n",
+		    base_name(__FILE__), __LINE__);
+	    
+	    res_i = mkdir(IMAGE_ROOT_DST);
+	    
+	    //log
+	    printf("[%s:%d] mkdir() => %d\n", base_name(__FILE__), __LINE__, res_i);
+	    
+	    if (res_i == 0) {
+
+		//log
+		printf("[%s:%d] Dst dir => created: %s\n",
+			base_name(__FILE__), __LINE__,IMAGE_ROOT_DST);
+		
+		consolColor_Change(black, white);
+
+		//log
+		printf("[%s:%d] IMAGE_ROOT_DST => set: %s\n",
+			base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+
+		consolColor_Reset();
+
+
+	    } else if (res_i == EEXIST) {
+		
+		//log
+		printf("[%s:%d] Dst dir already exists: %s\n",
+			base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+		
+	    } else {
+		
+		consolColor_Change(black, red);
+		
+		//log
+		printf("[%s:%d] Can't create dst dir: %s\n",
+			base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+		
+		printf("[%s:%d] Sorry. Program quits.\n",
+			
+			base_name(__FILE__), __LINE__);
+		
+		consolColor_Reset();
+	    
+		exit(-1);
+
+	    }
+	    
+	} else {    //if (res_i == 1)   // "-f" option => not set
+	    
+	    consolColor_Change(black, red);
+	    
+	    printf("[%s:%d] '-f' option is not set. Dst dir won't be created.\n",
+		base_name(__FILE__), __LINE__);
+	    
+	    printf("[%s:%d] Sorry. Program quits.\n",
+		base_name(__FILE__), __LINE__);
+	    
+	    consolColor_Reset();
+	    
+	    exit(-1);
+	    
+	}//if (res_i == 1)   // "-f" option
+	
+    } else {// if (res_i != 1)	// IMAGE_ROOT_DST => exists
+	
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST => exists: %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+	
+	consolColor_Change(black, white);
+
+	//log
+	printf("[%s:%d] IMAGE_ROOT_DST: set => %s\n",
+		base_name(__FILE__), __LINE__, IMAGE_ROOT_DST);
+
+	consolColor_Reset();
+
+    }// if (res_i != 1)
+
+
+//    free(dname_dst_m);
+    
+    /*******************************
+	Validate: dst pgm file => exists?
+     *******************************/
+        
+}//_main_DstFile(char **argv)

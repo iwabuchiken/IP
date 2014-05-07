@@ -18,6 +18,7 @@ int _opt_RGV(char **, int **);
 int validate_RGBStringFormat(char *);
 char * _opt_Src_File(char **, char *);
 char * _opt_Dst_File(char **, char *, char *);
+int _opt_ForceCreate_RootDst(char **);
 
 #endif	/* IMG_LIB_H */
 

@@ -634,3 +634,39 @@ char * _opt_Dst_File
 	return dst_file_path;
 
 }//char * _opt_Dst_File(char ** argv, char *current_dir)
+
+/*******************************
+ int _opt_ForceCreate_RootDst(char **argv)
+ * @return 1 => "-f" option set
+ *	    0 => not set 
+ *******************************/
+int _opt_ForceCreate_RootDst(char **argv)
+{
+    char *opt_ForceCreate_RootDst = "-f";
+
+    int increment = 1;
+
+    int flag = 0;
+
+    // Inspect args
+    while(*(argv + increment) != NULL) {
+	
+	int res = strcmp(*(argv + increment), opt_ForceCreate_RootDst);
+//		int res = strcmp(*argv, opt_RGB);
+
+	if (res == 0) {
+	    
+	    flag = 1;
+	    
+	    break;
+
+	}//if (res == 0)
+
+//		argv++;
+	increment ++;
+
+    }//while(*argv != NULL)
+    
+    return flag;
+    
+}
