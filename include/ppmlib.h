@@ -54,6 +54,8 @@ extern "C" {
      * Prototypes
      *******************************/
     int save_PPM(char *, PPM *);
+    
+//    char * conv_DstFile_Name(void);
 
 #ifdef	__cplusplus
 }

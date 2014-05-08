@@ -701,3 +701,39 @@ _opt_OverWrite_DstFile(char **argv)
     return flag;
     
 }
+
+char * conv_DstFile_Name(char *image_file_dst, int *rgb[3])
+{
+    int len = strlen(image_file_dst);
+    
+    int num_of_tokens;
+    
+    char **tokens = str_split_r_2(image_file_dst, '.', 1, &num_of_tokens);
+    
+    char rgb_string[15];
+    
+    sprintf(rgb_string, "_rgb=%d,%d,%d", rgb[0], rgb[1], rgb[2]);
+    
+    char *tmp = concat3(*tokens, rgb_string, ".ppm");
+    
+//    char *tmp = concat(tmp1, ".ppm");
+    
+//    len += strlen(rgb_string);
+//    
+//    len ++; // length for separator char
+    
+//    char *tmp = (char *) malloc(sizeof(char) * (len + 1));
+    
+//    strcpy(tmp, image_file_dst);
+    
+//    *(tmp + len) = '\0';
+    
+    return tmp;
+    
+    
+//    //log
+//    printf("[%s:%d] image_file_dst => %s\n",
+//	    base_name(__FILE__), __LINE__, image_file_dst);
+
+//    char **tmp = str_split_r_2()
+}

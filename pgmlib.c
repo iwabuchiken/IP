@@ -184,7 +184,7 @@ int get_PGM(FILE* fp, PGM *pgm)
  int conv_PGM2PPM(PGM *pgm, PPM *ppm)
  * @return 1 => conversion done 
  *******************************/
-int conv_PGM2PPM(PGM *pgm, PPM *ppm)
+int conv_PGM2PPM(PGM *pgm, PPM *ppm, int *rgb[3])
 {
     /************************************
      * Build ppm: header
@@ -238,14 +238,56 @@ int conv_PGM2PPM(PGM *pgm, PPM *ppm)
 //
 //	printf(tmp_msg, base_name(__FILE__), __LINE__, ppm->x, ppm->y);
 
+    //log
+//    printf("[%s:%d] pgm->grays[0] => %d\n",
+//	    base_name(__FILE__), __LINE__, (pgm->grays[0] * (rgb[0] / 100)));
+    //log
+//    printf("[%s:%d] rgb[0] => %d\n", base_name(__FILE__), __LINE__, rgb[0]);
+//    printf("[%s:%d] pgm->grays[0] => %d\n",
+//		base_name(__FILE__), __LINE__, (pgm->grays[0] * rgb[0]) / 100);
+//    //log
+//    printf("[%s:%d] pgm->grays[0] => %d\n", base_name(__FILE__), __LINE__, pgm->grays[0]);
+    
+//    int tmp_i = (pgm->grays[0]) * rgb[0];
+//    int tmp_i = (pgm->grays[0]);
+//
+//    tmp_i += 200 / 100;
+    
+//    int tmp_2 = rgb[0];	// warning: initialization makes integer from pointer without a cast
+//    int tmp_2 = (int) rgb[0];	// works
+//    int tmp_2 = rgb[0] / 100;	// invalid operands to binary /
+//    int tmp_2 = (int) rgb[0] / 100;	// compile through
+    
+    //log
+//    printf("[%s:%d] tmp_i => %d\n", base_name(__FILE__), __LINE__, tmp_i);
+
+//    tmp_i = (int) pgm->grays[position] * (*rgb[0] / 100); // compile ok, program stops
+//    tmp_i = (int) pgm->grays[position] * (*rgb[0] / 100); // works
+    
+//    tmp_i = (int) pgm->grays[position] * (rgb[0] / 100);  // error: invalid operands to binary /
+//    tmp_i = (int) pgm->grays[position] * ((int) rgb[0] / 100);    // 0
+//    tmp_i = ((int) pgm->grays[position] * (int) rgb[0]) / 100;	// 16
+//    tmp_i = ((int) pgm->grays[position] * rgb[0]) / 100;    // error: invalid operands to binary *
+//    tmp_i = ((int) pgm->grays[position] * (int) rgb[0]) / 100;
+//    
+//    //log
+//    printf("[%s:%d] tmp_i => %d\n", base_name(__FILE__), __LINE__, tmp_i);
 
     for (i = 0; i < ppm->y; ++i) {
 
 	for (j = 0; j < ppm->x; ++j) {
 
-	    ppm->pixels[position].r = pgm->grays[position];
-	    ppm->pixels[position].g = pgm->grays[position];
-	    ppm->pixels[position].b = pgm->grays[position];
+	    ppm->pixels[position].r = ((int) pgm->grays[position] * (int) rgb[0]) / 100;
+	    ppm->pixels[position].g = ((int) pgm->grays[position] * (int) rgb[1]) / 100;
+	    ppm->pixels[position].b = ((int) pgm->grays[position] * (int) rgb[2]) / 100;
+
+//	    ppm->pixels[position].r = (int) pgm->grays[position] * (*rgb[0] / 100);
+//	    ppm->pixels[position].g = (int) pgm->grays[position] * (*rgb[1] / 100);
+//	    ppm->pixels[position].b = (int) pgm->grays[position] * (*rgb[2] / 100);
+	    
+//	    ppm->pixels[position].r = pgm->grays[position];
+//	    ppm->pixels[position].g = pgm->grays[position];
+//	    ppm->pixels[position].b = pgm->grays[position];
 //			ppm->pixels[position].r = 0;
 //			ppm->pixels[position].g = 0;
 

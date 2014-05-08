@@ -69,5 +69,7 @@ int _opt_ForceCreate_RootDst(char **);
 
 int _opt_OverWrite_DstFile(char **);
 	
+char * conv_DstFile_Name(char *, int **);
+	
 #endif	/* IMG_LIB_H */
 

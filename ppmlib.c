@@ -85,4 +85,3 @@ int save_PPM(char *dst_file_path, PPM *ppm_dst)
     return 1;
 
 }//enum RetVals save_PPM(FILE *fp, PPM *ppm_dst)
-

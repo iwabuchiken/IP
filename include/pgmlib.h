@@ -58,7 +58,7 @@ extern "C" {
     int get_PGM_2(char *, PGM *);
     int get_PGM(FILE *, PGM *);
     
-    int conv_PGM2PPM(PGM *, PPM *);
+    int conv_PGM2PPM(PGM *, PPM *, int **);
     
 #ifdef	__cplusplus
 }

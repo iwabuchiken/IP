@@ -192,7 +192,21 @@ int main(int argc, char** argv) {
 //    printf("[%s:%d] PPM_dst->max_brightness => %d\n",
 //	    base_name(__FILE__), __LINE__, PPM_dst->max_brightness);
 
-    res_i = save_PPM(IMAGE_FILE_DST, PPM_dst);
+    /*******************************
+     * Modify: dst file name => add RGB info
+     *******************************/
+    char *img_file_dst = conv_DstFile_Name(IMAGE_FILE_DST, RGB);
+//    char **tmp_m = str_split_r_2(IMAGE_FILE_DST);
+    
+    //log
+    printf("[%s:%d] conv_DstFile_Name => done: %s\n",
+		base_name(__FILE__), __LINE__, img_file_dst);
+    
+    /*******************************
+     * save: PPM
+     *******************************/
+//    res_i = save_PPM(IMAGE_FILE_DST, PPM_dst);
+    res_i = save_PPM(img_file_dst, PPM_dst);
     
     //log
     printf("[%s:%d] save ppm => %d\n", base_name(__FILE__), __LINE__, res_i);
@@ -867,7 +881,8 @@ void _main_Conv_PGM2PPM(void)
 {
     PPM_dst = (PPM *) malloc(sizeof(PPM) * 1);
     
-    conv_PGM2PPM(PGM_src, PPM_dst);
+    conv_PGM2PPM(PGM_src, PPM_dst, RGB);
+//    conv_PGM2PPM(PGM_src, PPM_dst);
     
     consolColor_Change(black, white);
 	
