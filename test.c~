@@ -1,0 +1,25 @@
+/* 
+ * File:   test.c
+ * Author: iwabuchik
+ *
+ * Created on May 9, 2014, 1:10 AM
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//REF http://stackoverflow.com/questions/3506504/c-code-changes-terminal-text-color-how-to-restore-defaults-linux
+#define GREEN  "\033[34;32m"
+//#define GREEN  "\033[22;31m"
+#define RESETCOLOR "\033[0m"
+
+/*
+ * 
+ */
+int main(int argc, char** argv) {
+    
+    printf(GREEN "this will show up green" RESETCOLOR "\n");
+
+    return (EXIT_SUCCESS);
+}
+

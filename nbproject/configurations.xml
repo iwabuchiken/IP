@@ -7,6 +7,7 @@
       <itemPath>main.c</itemPath>
       <itemPath>pgmlib.c</itemPath>
       <itemPath>ppmlib.c</itemPath>
+      <itemPath>test.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles" displayName="ヘッダー・ファイル" projectFiles="true">
       <itemPath>include/img_lib.h</itemPath>
@@ -57,6 +58,8 @@
       </item>
       <item path="ppmlib.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="test.c" ex="false" tool="0" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -95,6 +98,8 @@
       <item path="pgmlib.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ppmlib.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="test.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
   </confs>
